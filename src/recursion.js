@@ -180,8 +180,35 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+/*
+   ip: base and exp (numbers)
+   op: result(number)
+   Strategy:
+   Declare a result variable as 1.
+   if exp = 0 return 1
+   Base case: if exp = 1 return result = base.
+   Recursive case:
+   if exp < 0
+   - Divide the result by base and perform / (exponent(base,exp+1))
+   - Increase the value of exp in recursion callback.
+   if exp > 1
+  - Multiply the result by base and perform * (exponent(base, exp - 1))
+  result = result * base * (exponent(base, exp - 1))
+  - Decrease the value of exp in recursion callback. * is not a valid command. In Slack, all messages that start with the "/" character are interpreted as commands.
 
-	
+  If you are trying to send a message and not run a command, try preceding the "/" with an empty space.
+  */
+  var result = 1;
+  if(exp === 0){
+      return 1;
+  }
+  if(exp === 1){
+  return result *= base;
+  }
+  if(exp < 1){
+        return result /= base / (exponent(base,exp+1));
+  }
+  return result *= base * (exponent(base,exp-1)); 
 };
 
 // 8. Determine if a number is a power of two.
@@ -189,15 +216,63 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  /*
+  ip: number
+  op: true or false
+  Strategy:
+  Base Case if n = 1 return true
+  if n < 1 return false
+  return powerOfTwo(n/2);
+  */
+  if(n === 1) {
+       return true;
+   }
+   if(n < 1){
+       return false;
+   }
+   return powerOfTwo(n/2);
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+  /*
+  ip: string
+  op: string
+  Strategy
+  - Base case: If the length of string is equal to 1 than return that string
+  - Recursion Case: recursion + string[0]
+
+  
+  */
+  if(string.length === 1){
+      return string;
+  }
+  return reverse(string.slice(1)) + string[0];
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  /*
+  ip: string
+  op: boolean
+  Strategy:
+  - Base Case : if the length of string is 1 or 0, return true
+  - Recursive case - Compare the first and last element of string, if they are equal
+                     then call palindrome(string.slice(1, -1))
+                     Compare till you reach the length of string to 1 or 0.
+
+  */
+  string = string.split(' ').join('').toLowerCase();
+  var length = string.length;
+  if(length === 0 || length === 1){
+    return true;
+  }
+  if(string[0] === string[string.length-1]){
+    return palindrome(string.slice(1, -1));
+  }
+   return false;
 };
+
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
